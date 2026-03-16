@@ -104,8 +104,14 @@ class GestureDetector:
                         cv2.putText(frame, self.canvas.mode, (int(camera.width//2-100), 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, self.canvas.colour, 2)
 
                     elif self.canvas.mode == "DRAWING":
-                        cv2.putText(frame, self.canvas.mode, (int(camera.width//2), 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, self.canvas.colour, 2)
+                        cv2.putText(frame, self.canvas.mode, (int(camera.width//2-50), 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, self.canvas.colour, 2)
 
+                    elif self.canvas.mode == "PEN LIFTED":
+                        cv2.putText(frame, self.canvas.mode, (int(camera.width//2-50), 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, self.canvas.colour, 2)
+                    
+                    elif self.canvas.mode == "ERASING":
+                        cv2.putText(frame, self.canvas.mode, (int(camera.width//2-50), 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
+                    
                     else:
                         cv2.putText(frame, self.canvas.mode, (int(camera.width//2), 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, colour, 2)
 
