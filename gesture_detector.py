@@ -100,7 +100,14 @@ class GestureDetector:
                 
                 if self.hand_landmarks_right:
                     self.canvas.draw(self.left_gesture, self.right_gesture, self.hand_landmarks_right[0].landmark[8])
-                    cv2.putText(frame, self.canvas.mode, (int(camera.width//2), 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, colour, 2)
+                    if self.canvas.mode == "RANDOMISING COLOUR":
+                        cv2.putText(frame, self.canvas.mode, (int(camera.width//2-100), 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, self.canvas.colour, 2)
+
+                    elif self.canvas.mode == "DRAWING":
+                        cv2.putText(frame, self.canvas.mode, (int(camera.width//2), 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, self.canvas.colour, 2)
+
+                    else:
+                        cv2.putText(frame, self.canvas.mode, (int(camera.width//2), 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, colour, 2)
 
                 blended = self.canvas.blend(frame)
 
