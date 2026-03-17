@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 import mediapipe as mp
 from canvas import Canvas
 from mediapipe import solutions
@@ -136,8 +137,13 @@ class GestureDetector:
 
                 cv2.imshow("camera", blended)
 
-                if cv2.waitKey(1) & 0xFF == ord('q'):
+                key = cv2.waitKey(1) & 0xFF
+                if key == ord('q'):
                     break
+                elif key == ord('c'):
+                    self.canvas.drawing_surface = np.zeros((round(camera.height), round(camera.width), 3), dtype=np.uint8)
+
+                
 
         camera.close()
 
