@@ -7,7 +7,7 @@ import numpy as np
 class Canvas():
     def __init__(self, camera):
         
-        self.colour = (255, 0, 0)
+        self.colour = (255, 255, 255)
         self.width = round(camera.width)
         self.height = round(camera.height)
         self.drawing_surface = np.zeros((self.height, self.width, 3), dtype=np.uint8)
