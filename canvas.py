@@ -35,7 +35,7 @@ class Canvas():
         if right_gesture == "Open_Palm":
             # print("Drawing mode")
 
-            if left_gesture == "Pointing_Up":
+            if left_gesture == "Pointing_Up" or left_gesture == "None":
                 # start changing the pixels
                 # print("Drawing now")
 

@@ -142,8 +142,7 @@ class GestureDetector:
                     break
                 elif key == ord('c'):
                     self.canvas.drawing_surface = np.zeros((round(camera.height), round(camera.width), 3), dtype=np.uint8)
-
-                
+                    self.canvas.colour = (255, 255, 255)
 
         camera.close()
 
