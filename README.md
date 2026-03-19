@@ -1,6 +1,6 @@
 # Hand Gesture Drawing
 
-A real-time hand gesture drawing application using MediaPipe and OpenCV. Use your hands to draw on screen, change colours, erase, and lift the pen — all without touching a keyboard or mouse.
+A real-time hand gesture drawing application using MediaPipe and OpenCV. Use your hands to draw on screen, change colours, erase, and lift the pen, all without touching a keyboard or mouse.
 
 ## Requirements
 
@@ -30,10 +30,12 @@ Download the MediaPipe Gesture Recognizer model file and place it in the root of
 
 ```
 drawing/
-├── main.py               # Entry point
+├── main.py               # Entry point, prompts for 1 or 2 hand mode
 ├── camera.py             # Camera feed handler
-├── gesture_detector.py   # MediaPipe gesture detection
-├── canvas.py             # Drawing surface and blend logic
+├── gesture_detector.py   # Two-hand MediaPipe gesture detection
+├── canvas.py             # Drawing surface for two-hand mode
+├── single_hand.py        # Single-hand MediaPipe gesture detection
+├── canvas_single.py      # Drawing surface for single-hand mode
 └── gesture_recognizer.task
 ```
 
@@ -45,22 +47,40 @@ The app uses camera device index `1` by default, which assumes you are using an 
 python main.py
 ```
 
-Press **Q** to quit.
+On startup you will be prompted to choose a mode:
+```
+Do you want to use [1] hand or [2] hands. Put the number in:
+```
+
+Press **Q** to quit. Press **C** to clear the canvas.
 
 ## Gesture Controls
 
-The app uses **two hands**. Due to the mirrored camera feed, gestures are mapped as follows:
+### Single-Hand Mode
+Uses one hand for all controls.
+
+| Gesture | Action |
+|---|---|
+| Pointing Up | Draw |
+| Closed Fist | Lift pen (stop drawing) |
+| Thumb Down | Erase |
+| Victory | Randomise brush colour |
+
+> Drawing and erasing track the **index fingertip** (landmark 8).
+
+### Two-Hand Mode
+Uses **two hands**. Due to the mirrored camera feed, gestures are mapped as follows:
 
 | Hand (on screen) | Gesture | Action |
 |---|---|---|
 | Right | Open Palm | Enable drawing mode |
-| Left | Pointing Up | Draw |
+| Left | Pointing Up | Draw (requires right hand in Open Palm) |
 | Right | Closed Fist | Lift pen (stop drawing) |
 | Right | Thumb Down | Erase |
 | Right | Victory | Randomise brush colour |
 
-> Note: Drawing and erasing track the **index fingertip** (landmark 8) of the left hand.
+> Drawing and erasing track the **index fingertip** (landmark 8) of the left hand.
 
 ## Known Issues
 - There may be slight latency between hand movement and detection due to the async nature of MediaPipe's live stream mode.
-- The `Victory` gesture randomises the colour on every frame while held — tap it briefly for a single colour change.
+- The `Victory` gesture randomises the colour on every frame while held. Tap it briefly for a single colour change.
