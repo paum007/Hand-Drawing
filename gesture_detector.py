@@ -30,8 +30,12 @@ class GestureDetector:
         self.left_text = ""
         self.right_text = ""
 
+        self.frame_count = 0
+
         self.options = self.GestureRecognizerOptions(
             num_hands = 2,
+            min_hand_detection_confidence=0.2,
+            min_tracking_confidence=0.3,
             base_options=self.BaseOptions(model_asset_path=self.model_path), # Selecting the model
             running_mode=self.VisionRunningMode.LIVE_STREAM, # Configure the gesture recognizer for live stream mode.
             result_callback=self.gesture_result) # When a result is ready, MediaPipe will automatically call print_result.
@@ -89,7 +93,15 @@ class GestureDetector:
                 
                 # change the image into the correct format for MediaPipe to read it
                 mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
-                result = recognizer.recognize_async(mp_image, timestamp_ms) # get the result
+
+                # self.frame_count += 1
+
+                # if self.frame_count %2 == 0:
+                #     recognizer.recognize_async(mp_image, timestamp_ms) # get the result
+
+                recognizer.recognize_async(mp_image, timestamp_ms) # get the result
+
+
                 # Putting the text over the image
                 colour = (0, 255, 0) if self.text!="Waiting for gesture" else (0, 0, 255)
 
