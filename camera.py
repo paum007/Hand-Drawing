@@ -17,8 +17,17 @@ class Camera():
         if not ret:
             self.close()
             return
+        
+        lab = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
+        split = cv2.split(lab) 
+        lightness = split[0]
+        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+        applied = clahe.apply(lightness)
+        merged = cv2.merge([applied, split[1], split[2]])
+        enhanced = cv2.cvtColor(merged, cv2.COLOR_LAB2BGR)
+
                 
-        return cv2.flip(frame, 1), self.timestamp_ms
+        return cv2.flip(enhanced, 1), self.timestamp_ms
     
     def camera_info(self):
         return self.fps, 
