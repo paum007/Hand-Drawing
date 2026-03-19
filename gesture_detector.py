@@ -99,7 +99,11 @@ class GestureDetector:
                 # if self.frame_count %2 == 0:
                 #     recognizer.recognize_async(mp_image, timestamp_ms) # get the result
 
-                recognizer.recognize_async(mp_image, timestamp_ms) # get the result
+                try:
+                    recognizer.recognize_async(mp_image, timestamp_ms) # get the result
+
+                except Exception as e:
+                    print(f"Exception: {e}")
 
 
                 # Putting the text over the image

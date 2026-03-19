@@ -73,7 +73,15 @@ class SingleHand:
                 
                 # change the image into the correct format for MediaPipe to read it
                 mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
-                result = recognizer.recognize_async(mp_image, timestamp_ms) # get the result
+
+                try:
+                    recognizer.recognize_async(mp_image, timestamp_ms) # get the result
+
+                except Exception as e:
+                    print(f"Exception: {e}")
+
+                    
+
                 # Putting the text over the image
                 colour = (0, 255, 0) if self.text!="Waiting for gesture" else (0, 0, 255)
                 cv2.putText(frame, self.gesture_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, colour, 2)
