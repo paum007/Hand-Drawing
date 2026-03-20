@@ -4,7 +4,7 @@ class Camera():
     def __init__(self):
         self.feed = cv2.VideoCapture(1)
         self.feed.set(cv2.CAP_PROP_BUFFERSIZE, 1)
-        self.fps = self.feed.set(cv2.CAP_PROP_FPS, 20)
+        self.fps = self.feed.set(cv2.CAP_PROP_FPS, 60)
         self.width = self.feed.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.feed.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.timestamp_ms = 0
@@ -18,16 +18,15 @@ class Camera():
             self.close()
             return
         
-        lab = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
-        split = cv2.split(lab) 
-        lightness = split[0]
-        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
-        applied = clahe.apply(lightness)
-        merged = cv2.merge([applied, split[1], split[2]])
-        enhanced = cv2.cvtColor(merged, cv2.COLOR_LAB2BGR)
-
+        # lab = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
+        # split = cv2.split(lab) 
+        # lightness = split[0]
+        # clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+        # applied = clahe.apply(lightness)
+        # merged = cv2.merge([applied, split[1], split[2]])
+        # enhanced = cv2.cvtColor(merged, cv2.COLOR_LAB2BGR)
                 
-        return cv2.flip(enhanced, 1), self.timestamp_ms
+        return frame, self.timestamp_ms # return enhanced alongside frame if the lighting is a big issue
     
     def camera_info(self):
         return self.fps, 
