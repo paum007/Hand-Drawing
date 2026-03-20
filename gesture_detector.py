@@ -34,8 +34,8 @@ class GestureDetector:
 
         self.options = self.GestureRecognizerOptions(
             num_hands = 2,
-            min_hand_detection_confidence=0.5,
-            min_tracking_confidence=0.3,
+            min_hand_detection_confidence=0.5, # The lower this number, the slower mediapipe will be.
+            min_tracking_confidence=0.3, # The lower this number, the slower mediapipe will be.
             base_options=self.BaseOptions(model_asset_path=self.model_path), # Selecting the model
             running_mode=self.VisionRunningMode.LIVE_STREAM, # Configure the gesture recognizer for live stream mode.
             result_callback=self.gesture_result) # When a result is ready, MediaPipe will automatically call print_result.
