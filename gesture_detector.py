@@ -1,4 +1,5 @@
 import cv2
+import time
 import numpy as np
 import mediapipe as mp
 from canvas import Canvas
@@ -8,7 +9,6 @@ from mediapipe.framework.formats import landmark_pb2
 
 class GestureDetector:
     def __init__(self, camera):
-        
         self.canvas = Canvas(camera)
         self.BaseOptions = mp.tasks.BaseOptions
         self.GestureRecognizer = mp.tasks.vision.GestureRecognizer
@@ -34,7 +34,7 @@ class GestureDetector:
 
         self.options = self.GestureRecognizerOptions(
             num_hands = 2,
-            min_hand_detection_confidence=0.2,
+            min_hand_detection_confidence=0.5,
             min_tracking_confidence=0.3,
             base_options=self.BaseOptions(model_asset_path=self.model_path), # Selecting the model
             running_mode=self.VisionRunningMode.LIVE_STREAM, # Configure the gesture recognizer for live stream mode.
@@ -84,6 +84,7 @@ class GestureDetector:
         with self.GestureRecognizer.create_from_options(self.options) as recognizer:
         # The detector is initialized. Use it here.
             while True:
+                start = time.time()
                 camera.frames()
                 feed = camera.frames()
                 if feed is None:
@@ -100,6 +101,7 @@ class GestureDetector:
                 #     recognizer.recognize_async(mp_image, timestamp_ms) # get the result
 
                 try:
+                    # time.sleep(0.02)
                     recognizer.recognize_async(mp_image, timestamp_ms) # get the result
 
                 except Exception as e:
@@ -150,7 +152,7 @@ class GestureDetector:
                         solutions.drawing_styles.get_default_hand_landmarks_style(),
                         solutions.drawing_styles.get_default_hand_connections_style())
 
-
+                print(time.time() - start)
                 cv2.imshow("camera", blended)
 
                 key = cv2.waitKey(1) & 0xFF
