@@ -26,7 +26,7 @@ class Camera():
         # merged = cv2.merge([applied, split[1], split[2]])
         # enhanced = cv2.cvtColor(merged, cv2.COLOR_LAB2BGR)
                 
-        return frame, self.timestamp_ms # return enhanced alongside frame if the lighting is a big issue
+        return cv2.flip(frame, 1), self.timestamp_ms # return enhanced alongside frame if the lighting is a big issue
     
     def camera_info(self):
         return self.fps, 
