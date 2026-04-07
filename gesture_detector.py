@@ -116,6 +116,8 @@ class GestureDetector:
 
                 cv2.putText(frame, self.left_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, colour, 2)
                 cv2.putText(frame, self.right_text, (int(camera.width-300), 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, colour, 2)
+                cv2.putText(frame, f"fps:{str(camera.live_fps)}", (10, (int(camera.height)-10)), cv2.FONT_HERSHEY_SIMPLEX, 0.8, [255,255,255], 2)
+
                 
                 if self.hand_landmarks_right:
                     self.canvas.draw(self.left_gesture, self.right_gesture, self.hand_landmarks_right[0].landmark[8])

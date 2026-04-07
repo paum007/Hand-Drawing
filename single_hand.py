@@ -85,6 +85,7 @@ class SingleHand:
                 # Putting the text over the image
                 colour = (0, 255, 0) if self.text!="Waiting for gesture" else (0, 0, 255)
                 cv2.putText(frame, self.gesture_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, colour, 2)
+                cv2.putText(frame, f"fps: {str(camera.live_fps)}", (10, (int(camera.height)-10)), cv2.FONT_HERSHEY_SIMPLEX, 0.8, [255,255,255], 2)
 
 
                 if self.text == "Waiting for gesture":
